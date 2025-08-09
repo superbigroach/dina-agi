@@ -1,0 +1,57 @@
+# NPM Ignore file for dina-agi
+
+# Development files
+*.log
+*.md
+!README.md
+.env
+.env.*
+
+# Build artifacts
+build/
+dist/
+*.tgz
+
+# Cloud deployment files
+cloudbuild.yaml
+deploy-*.sh
+.github/
+Dockerfile.*
+
+# Test files
+test/
+tests/
+*.test.js
+*.spec.js
+
+# Documentation
+docs/
+*.pdf
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Firebase local
+firebase-debug.log
+firestore-debug.log
+.firebase/
+
+# Keep only essentials
+!cli.js
+!superintelligent_agent_collective.js
+!autonomous_builder.js
+!package.json
+!package-lock.json
+!Dockerfile
+!docker-compose.yml

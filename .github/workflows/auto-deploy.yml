@@ -1,0 +1,36 @@
+name: 🤖 Agent Auto-Deploy
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+  repository_dispatch:
+    types: [agent-deploy]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        
+      - name: 🔧 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.32.7'
+          
+      - name: 📦 Get dependencies
+        run: flutter pub get
+        
+      - name: 🏗️ Build web app
+        run: flutter build web --release
+        
+      - name: 🚀 Deploy to Firebase
+        run: |
+          npm install -g firebase-tools
+          firebase deploy --only hosting --token "${{ secrets.FIREBASE_TOKEN }}" --project agenticsfoundation-2e916
+          
+      - name: 📝 Log deployment
+        run: |
+          echo "🎉 Web app deployed successfully at $(date)"
+          echo "URL: https://agenticsfoundation-2e916.web.app"

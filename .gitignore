@@ -1,0 +1,34 @@
+# Flutter/Dart
+.dart_tool/
+.idea/
+.packages
+build/
+.pub-cache/
+.pub/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# General
+*.iml
+*.ipr
+*.iws
+.DS_Store
+
+# Test files
+coverage/
+
+# Firebase and deployment logs
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+.firebase/
+
+# Secrets
+.env
+
+# IDE files
+.vscode/google-cloud-cli-linux-x86_64.tar.gz
+*.tar.gz
+*.zip
+*.7z
+node_modules

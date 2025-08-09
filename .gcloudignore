@@ -1,0 +1,49 @@
+# Flutter/Dart
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Node
+node_modules/
+npm-debug.log
+
+# Logs
+*.log
+
+# Firebase
+.firebase/
+firebase-debug.log
+
+# Large files that shouldn't be in source
+*.zip
+*.tar.gz
+*.dmg
+*.exe
+
+# Keep these important files
+!cloudbuild.yaml
+!Dockerfile.simple
+!pubspec.yaml
+!pubspec.lock
+!lib/
+!web/
+!assets/

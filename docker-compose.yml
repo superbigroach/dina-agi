@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  # Main Superintelligent Agent Collective
+  agent-collective:
+    build: .
+    container_name: superintelligent-agents
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - AUTONOMOUS=true
+      - CLAUDE_FLOW=active
+      - SWARMS=active
+      - QUANTUM_MODE=active
+      - AGENT_COUNT=128
+      - DOCKER_CONTAINER=true
+    volumes:
+      - ./agent_builds:/app/agent_builds
+      - ./logs:/app/logs
+    networks:
+      - agent-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 1G
+
+  # Playwright Scraper Backend
+  scraper-backend:
+    build: ./scraper_backend
+    container_name: playwright-scraper
+    ports:
+      - "3004:3004"
+    environment:
+      - NODE_ENV=production
+      - PORT=3004
+    networks:
+      - agent-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '1'
+          memory: 2G
+
+  # Optional: Firebase Emulator for local development
+  firebase-emulator:
+    image: andreysenov/firebase-tools
+    container_name: firebase-local
+    ports:
+      - "9000:9000"  # Firestore
+      - "9099:9099"  # Auth
+      - "4000:4000"  # Emulator UI
+    command: firebase emulators:start --only firestore,auth
+    volumes:
+      - ./firebase.json:/home/node/firebase.json
+      - ./firestore.rules:/home/node/firestore.rules
+    networks:
+      - agent-network
+
+networks:
+  agent-network:
+    driver: bridge
+
+volumes:
+  agent_builds:
+  logs:

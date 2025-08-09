@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "agenticsfoundation-2e916"
+  },
+  "targets": {
+    "agenticsfoundation-2e916": {
+      "hosting": {
+        "production": [
+          "agenticsfoundation-2e916"
+        ]
+      }
+    }
+  }
+}

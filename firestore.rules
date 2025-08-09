@@ -1,0 +1,207 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users can read/write their own profile
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Research data - public read for autonomous system, auth write
+    match /research_papers/{paperId} {
+      allow read: if true;
+      allow write: if true; // Allow autonomous system to write
+    }
+
+    // Generated courses - public read, allow system write
+    match /generated_courses/{courseId} {
+      allow read: if true;
+      allow write: if true; // Allow autonomous system to write
+    }
+
+    // Breakthrough discoveries - public access for system
+    match /breakthrough_discoveries/{discoveryId} {
+      allow read, write: if true;
+    }
+
+    // Breakthrough courses - public access for system
+    match /breakthrough_courses/{courseId} {
+      allow read, write: if true;
+    }
+
+    // Live agents - system access
+    match /live_agents/{agentId} {
+      allow read, write: if true;
+    }
+
+    // Agent activities - system access
+    match /agent_activities/{activityId} {
+      allow read, write: if true;
+    }
+
+    // System status - public read
+    match /system_status/{statusId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // MCP usage tracking - allow system access
+    match /mcp_usage/{document} {
+      allow read, write: if true;
+    }
+
+    // Discovered patterns - public read for sharing knowledge
+    match /discovered_patterns/{patternId} {
+      allow read: if true;
+      allow write: if true; // Allow autonomous system to write
+    }
+
+    // Social accounts - user specific when authenticated
+    match /social_accounts/{accountId} {
+      allow read, write: if request.auth != null &&
+        resource.data.userId == request.auth.uid;
+    }
+
+    // App config - public read for system operation
+    match /app_config/{configId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // ICML papers - public access
+    match /icml_papers/{paperId} {
+      allow read, write: if true;
+    }
+
+    // Conferences - public access
+    match /conferences/{confId} {
+      allow read, write: if true;
+    }
+
+    // ArXiv papers - public access
+    match /arxiv_papers/{paperId} {
+      allow read, write: if true;
+    }
+
+    // User bookmarks - user specific
+    match /user_bookmarks/{bookmarkId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // RuvNet repositories - public access
+    match /ruvnet_repos/{repoId} {
+      allow read, write: if true;
+    }
+
+    // Paper repository links - public access
+    match /paper_repo_links/{linkId} {
+      allow read, write: if true;
+    }
+
+    // Enhanced user profiles - user specific
+    match /enhanced_user_profiles/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Friend requests - user specific
+    match /friend_requests/{requestId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Agent queries - allow system and authenticated users
+    match /agent_queries/{queryId} {
+      allow read, write: if true;
+    }
+
+    // AI chat messages - allow system and authenticated users  
+    match /ai_chat_messages/{messageId} {
+      allow read, write: if true;
+    }
+
+    // Collaboration sessions - authenticated users
+    match /collaboration_sessions/{sessionId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Collaboration invitations - authenticated users
+    match /collaboration_invitations/{inviteId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Member profiles - user specific
+    match /member_profiles/{userId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // User connections - user specific
+    match /user_connections/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // AUTONOMOUS AGENT COLLECTIONS - Agents can create and manage collections
+    match /agent_discoveries/{document} {
+      allow read, write: if true;
+    }
+    
+    match /autonomous_research_papers/{document} {
+      allow read, write: if true;
+    }
+    
+    match /autonomous_code_repositories/{document} {
+      allow read, write: if true;
+    }
+    
+    match /autonomous_breakthroughs/{document} {
+      allow read, write: if true;
+    }
+    
+    match /autonomous_datasets/{document} {
+      allow read, write: if true;
+    }
+    
+    match /intelligence_discoveries/{document} {
+      allow read, write: if true;
+    }
+    
+    match /agent_learning_network/{document} {
+      allow read, write: if true;
+    }
+    
+    match /superintelligence_research/{document} {
+      allow read, write: if true;
+    }
+    
+    // Agent Communication and UI Updates
+    match /agent_ui_updates/{document} {
+      allow read, write: if true;
+    }
+    
+    match /ui_configuration/{document} {
+      allow read, write: if true;
+    }
+    
+    match /dynamic_rules/{document} {
+      allow read, write: if true;
+    }
+    
+    // Agent-specific collections (pattern: agent_{agentId}_*)
+    match /agent_{agentId}_discoveries/{document} {
+      allow read, write: if true;
+    }
+    
+    match /agent_{agentId}_research/{document} {
+      allow read, write: if true;
+    }
+    
+    match /agent_{agentId}_analysis/{document} {
+      allow read, write: if true;
+    }
+    
+    // Global catch-all for any collections agents create
+    // This allows agents to create ANY collection they want
+    match /{document=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}

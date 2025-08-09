@@ -1,0 +1,41 @@
+{
+  "name": "dina-agi",
+  "version": "1.0.0",
+  "description": "DINA AGI - Dynamic Intelligence Network Architecture. 128 Autonomous Agents with Claude Flow, Swarms, and 300+ MCPs. True AGI System.",
+  "main": "superintelligent_agent_collective.js",
+  "bin": {
+    "dina-agi": "./cli.js",
+    "dina": "./cli.js"
+  },
+  "scripts": {
+    "start": "node superintelligent_agent_collective.js",
+    "dev": "nodemon superintelligent_agent_collective.js",
+    "collective": "node superintelligent_agent_collective.js",
+    "agi": "node superintelligent_agent_collective.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.14.0",
+    "firebase-admin": "^11.11.0"
+  },
+  "keywords": [
+    "dina",
+    "agi",
+    "artificial-general-intelligence",
+    "superintelligence",
+    "autonomous-agents",
+    "claude-flow",
+    "kye-gomez-swarms",
+    "quantum-computing",
+    "consciousness-simulation",
+    "neural-networks",
+    "playwright-scraping"
+  ],
+  "author": "DINA AGI Collective",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/dina-agi"
+  },
+  "homepage": "https://github.com/yourusername/dina-agi#readme"
+}

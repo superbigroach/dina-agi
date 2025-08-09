@@ -1,0 +1,47 @@
+# Flutter/Dart
+.dart_tool/
+.idea/
+.packages
+build/
+.pub-cache/
+.pub/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# General
+.git
+.gitignore
+*.iml
+*.ipr
+*.iws
+.DS_Store
+README.md
+*.md
+
+# Test files
+test/
+*_test.dart
+coverage/
+
+# Firebase and deployment logs
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+.firebase/
+
+# Large media files
+# assets/animations/  # Commented out - needed for build
+# *.jpeg  # Commented out - needed for animations
+# *.jpg   # Commented out - needed for animations
+
+# Scripts and tools
+scripts/
+*.sh
+create_*.js
+svg-to-png-converter.html
+
+# Build config files (already in container)
+cloudbuild.yaml
+service.yaml
+Dockerfile
+.dockerignore
