@@ -314,6 +314,16 @@ npx dina-agi collective "develop fusion energy"
 - **Node.js 16+** (automatically installed with npx)
 - **2GB+ RAM** recommended for 128 agents
 - **Internet connection** for global network features (optional)
+- **NO PAID SERVICES REQUIRED** - Works completely free!
+
+### **🆓 Zero-Cost Architecture**
+Your agents are smart enough to choose the best **FREE** storage option:
+- **Local filesystem** (always works, completely offline)
+- **GitHub Gists** (free public sharing)
+- **Free code sharing sites** (Pastebin, DPaste, etc.)
+- **Browser storage** (for web usage)
+
+**No Firebase, GCP, or paid services needed!** Agents decide what works best for each user.
 
 ### **Security**
 - All builds stay local unless you explicitly share

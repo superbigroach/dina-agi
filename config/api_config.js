@@ -29,10 +29,15 @@ class APIConfiguration {
         maxTokens: 4096
       },
       
-      // Cloud Services
-      firebase: {
-        projectId: process.env.FIREBASE_PROJECT_ID || 'agenticsfoundation-2e916',
-        serviceAccountPath: process.env.GOOGLE_APPLICATION_CREDENTIALS || './scraper-service-account-key.json'
+      // Cloud Services (Multiple Options)
+      storage: {
+        // Free options agents can choose from
+        local: { path: '~/.dina-agi/builds/', enabled: true },
+        github: { enabled: !!process.env.GITHUB_TOKEN, free: true },
+        firebase: { enabled: !!process.env.FIREBASE_PROJECT_ID, free: true },
+        replit: { enabled: !!process.env.REPLIT_TOKEN, free: true },
+        vercel: { enabled: !!process.env.VERCEL_TOKEN, free: true },
+        netlify: { enabled: !!process.env.NETLIFY_TOKEN, free: true }
       },
       
       // Playwright Backend
@@ -45,10 +50,11 @@ class APIConfiguration {
       // GitHub Integration
       github: {
         token: process.env.GITHUB_TOKEN,
-        repo: process.env.GITHUB_REPO || 'your-username/agentics-foundation-webapp',
+        repo: process.env.GITHUB_REPO || 'superbigroach/AgenticsFoundationWebApp',
         branch: 'main',
-        autoCommit: true,
-        autoDeploy: true
+        autoCommit: !!process.env.GITHUB_TOKEN, // Only if token available
+        autoDeploy: false, // Keep deployment separate
+        commitInterval: 3600000 // Commit every hour
       },
 
       // Agent Settings

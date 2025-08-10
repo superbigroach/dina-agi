@@ -1,6 +1,6 @@
 {
   "name": "dina-agi",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "DINA AGI - Dynamic Intelligence Network Architecture. 128 Autonomous Agents with Claude Flow, Swarms, and 300+ MCPs. True AGI System.",
   "main": "superintelligent_agent_collective.js",
   "bin": {

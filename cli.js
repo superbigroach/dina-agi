@@ -24,6 +24,14 @@ const banner = `
 
 console.log(banner);
 
+console.log('🆓 WORKS FOR EVERYONE - NO PAID SERVICES REQUIRED!');
+console.log('📁 Agents automatically choose the best FREE storage:');
+console.log('   • Local filesystem (always works)');
+console.log('   • GitHub Gists (if git available)');
+console.log('   • Free code sharing sites');
+console.log('   • Your browser storage');
+console.log('');
+
 const { DinaNetworkNode } = require('./dina-network');
 
 const args = process.argv.slice(2);

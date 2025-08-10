@@ -23,8 +23,16 @@ firestore-debug.log
 ui-debug.log
 .firebase/
 
-# Secrets
+# Secrets and Credentials - NEVER COMMIT THESE!
 .env
+*.json
+*-key.json
+*-service-account*.json
+service-account*.json
+scraper-service-account-key.json
+firebase-adminsdk*.json
+gcp-*.json
+credentials.json
 
 # IDE files
 .vscode/google-cloud-cli-linux-x86_64.tar.gz
