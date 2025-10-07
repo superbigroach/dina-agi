@@ -48,6 +48,9 @@ try {
 const { conductResearch } = require('./modules/research');
 const { synthesizeResearch } = require('./modules/synthesis');
 const { createBuild } = require('./modules/build');
+const { validateRelationships } = require('./modules/validation');
+const { getKnowledgeGraph, updateKnowledgeGraph } = require('./modules/knowledge');
+const { selectNextTopic } = require('./modules/topic_selector');
 
 // --- Jules's Tool Definitions ---
 // The following functions are wrappers that define how I, Jules, will use my
@@ -108,7 +111,10 @@ class SuperintelligentAgentCollective {
       console.log(`\n--- Starting New Research Cycle on: "${researchTopic}" ---`);
       this.agent.building = true;
 
-      // 1. Research
+      // 1. Get current knowledge
+      let knowledgeGraph = await getKnowledgeGraph();
+
+      // 2. Research
       const researchData = await conductResearch(researchTopic, googleSearch, viewTextWebsite);
       if (!researchData) {
         console.error("Halting cycle: Research phase failed.");
@@ -117,33 +123,36 @@ class SuperintelligentAgentCollective {
         continue;
       }
 
-      // 2. Synthesize
-      const synthesizedData = synthesizeResearch(researchData);
-      if (!synthesizedData || !synthesizedData.key_concepts.length) {
+      // 3. Synthesize
+      const synthesizedData = synthesizeResearch(researchData, knowledgeGraph);
+      if (!synthesizedData || !synthesizedData.allConcepts.length) {
           console.error("Halting cycle: Synthesis phase failed.");
           this.agent.building = false;
           await new Promise(resolve => setTimeout(resolve, 10000));
           continue;
       }
 
-      // 3. Build
-      const build = createBuild(synthesizedData, researchTopic);
-      if (!build) {
-          console.error("Halting cycle: Build phase failed.");
-          this.agent.building = false;
-          await new Promise(resolve => setTimeout(resolve, 10000));
-          continue;
+      // 4. Validate new relationships
+      const validatedEdges = await validateRelationships(synthesizedData.newEdges, googleSearch);
+
+      // 5. Update Knowledge Graph
+      knowledgeGraph.nodes.push(...synthesizedData.newNodes);
+      knowledgeGraph.edges.push(...validatedEdges);
+      await updateKnowledgeGraph(knowledgeGraph);
+
+      // 6. Build
+      const build = createBuild(synthesizedData, knowledgeGraph, researchTopic);
+      if (build) {
+        await this.saveBuild(build);
+        this.agent.projects.push(build);
       }
       
-      // 4. Save the build
-      await this.saveBuild(build);
-      this.agent.projects.push(build);
-
       this.agent.building = false;
       console.log(`✅ Cycle complete for "${researchTopic}".`);
 
-      // 5. Self-Learning: Choose the next topic from the key concepts
-      researchTopic = synthesizedData.key_concepts[0]; // Choose the most prominent concept
+      // 7. Self-Learning: Intelligently select the next topic based on the knowledge graph
+      const lastTopic = researchTopic;
+      researchTopic = selectNextTopic(knowledgeGraph, lastTopic);
       console.log(`💡 New research topic chosen for next cycle: "${researchTopic}"`);
 
       // Wait for a bit before starting the next cycle
